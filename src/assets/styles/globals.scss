@@ -1,0 +1,18 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+$gradient-color-1: #0b103a;
+$gradient-color-2: #12269d;
+$gradient-angle: 101deg;
+
+.gradient-background {
+  background: linear-gradient(
+    $gradient-angle,
+    $gradient-color-1 7.42%,
+    $gradient-color-2 82.78%
+  );
+
+}
+
