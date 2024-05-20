@@ -8,9 +8,13 @@ import Cookies from "js-cookie";
 export const PageTwo = () => {
   const [user] = useAtom(userAtom);
   const [alerts, setAlerts] = useState<Alert[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState(null);
   const userId = user.id; // Utiliser directement user.id, car il est déjà une chaîne
+
+ 
+
+
 
   useEffect(() => {
     const getAlerts = async () => {
@@ -20,9 +24,9 @@ export const PageTwo = () => {
           throw new Error("Token is missing");
         }
         const alertsData: AlertsData = await fetchAlertsByUserId(token, userId);
-        console.log("alerts data", alertsData);
         setAlerts(alertsData.alertsByUserId); // Assurez-vous d'accéder correctement aux données
         setLoading(false);
+        
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -33,6 +37,14 @@ export const PageTwo = () => {
       getAlerts();
     }
   }, [user, userId]);
+
+  const getIsOpenMessage = ( targetPrice: number) =>  {
+    if (targetPrice > 2000) {
+      return "L'opéaration est terminer"
+    } else { 
+      return "l'opération est en cours tu sais"
+    }
+  }
 
 
 
@@ -46,17 +58,24 @@ export const PageTwo = () => {
             <table className="table-auto mx-auto">
               <thead>
                 <tr className="bg-black-200">
+                <th className="border px-4 py-2">Id</th>
                   <th className="border px-4 py-2">Asset</th>
                   <th className="border px-4 py-2">Current Price</th>
                   <th className="border px-4 py-2">Target Price</th>
+                  <th className="border px-4 py-2">is Open</th>
+
                 </tr>
               </thead>
               <tbody>
                 {alerts.map((alert) => (
                   <tr key={alert.id} >
+                    <td className="border px-4 py-2 hover:bg-red-300">{alert.id}</td>
                     <td className="border px-4 py-2 hover:bg-red-300">{alert.asset}</td>
+
                     <td className="border px-4 py-2 hover:bg-red-300">{alert.currentPrice}</td>
                     <td className="border px-4 py-2 hover:bg-red-300" >{alert.targetPrice}</td>
+                    <td className="border px-4 py-2 hover:bg-red-300">{getIsOpenMessage(alert.targetPrice)}</td>
+
                   </tr>
                 ))}
               </tbody>

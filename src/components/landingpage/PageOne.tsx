@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { userAtom } from "../../stores/userAtom";
 import { useAtom } from "jotai";
+import { userAtom } from "../../stores/userAtom";
+import { CoinGetAndALert } from "./CoinGetAndALert";
+
 
 export const PageOne = () => {
   const [user] = useAtom(userAtom);
@@ -12,6 +14,7 @@ export const PageOne = () => {
     })
   );
 
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setFormattedTime(
@@ -21,7 +24,7 @@ export const PageOne = () => {
           second: "2-digit",
         })
       );
-    }, 1000);
+    }, 1000); 
 
     return () => clearInterval(intervalId);
   }, []);
@@ -35,16 +38,22 @@ export const PageOne = () => {
   });
 
   return (
-    <div className="flex flex-col h-screen sm:p-4 sm:py-4 gradient-background justify-center items-center">
-      <div className="text-center text-white gap-8">
-        <h1 className="text-4xl font-bold ">
+    <div className="flex flex-col h-screen w- sm:p-4 sm:py-4 gradient-background">
+      <div className="flex flex-col h-1/3 mt-6 sm:mt-2 before:text-center justify-center items-center text-white gap-2 border">
+        <h1 className="text-4xl font-bold">
           Bonjour {user.first_name ? user.first_name : "Invité"}
-        </h1>{" "}
+        </h1>
         <p className="text-2xl mt-12">
           Nous sommes le {formattedDate} et il est {formattedTime}.
         </p>
+      
       </div>
+
+      <div className="flex flex-col h-2/3 mt-6 sm:mt-2 before:text-center justify-center items-center text-white gap-2 border">
+      <CoinGetAndALert userId={user.id} />
+
+      </div>
+    
     </div>
   );
 };
-

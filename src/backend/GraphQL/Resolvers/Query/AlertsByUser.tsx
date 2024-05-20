@@ -8,6 +8,7 @@ export type Alert = {
   asset: string;
   currentPrice: number;
   targetPrice: number;
+  isOpen: boolean;
 };
 
 export type AlertsData = {
