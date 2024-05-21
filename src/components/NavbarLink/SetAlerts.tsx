@@ -4,8 +4,10 @@ import { fetchUpdateAlertsStatus, UpdateAlertStatut,  } from "../../backend/Grap
 import { useAtom } from "jotai";
 import { userAtom } from "../../stores/userAtom";
 import Cookies from "js-cookie";
+import { ID } from "graphql-request/alpha/schema/scalars";
 
-export const SetAlerts = () => {
+
+export const SetAlerts  = () => {
   const [user] = useAtom(userAtom);
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [, setLoading] = useState(true);
@@ -35,6 +37,8 @@ export const SetAlerts = () => {
       getAlerts();
     }
   }, [user, userId]);
+
+ 
 
 
 //   useEffect(() => {
@@ -69,6 +73,13 @@ export const SetAlerts = () => {
 //     }
 //   }, [alerts]); 
 
+const verifconstructor = () => {
+    const verif = openAlerts
+    console.log(verif);
+
+    return verif
+}
+
 
   const openAlerts = alerts.filter(alert => alert.isOpen);
   const closedAlerts = alerts.filter(alert => !alert.isOpen);
@@ -82,6 +93,9 @@ export const SetAlerts = () => {
   
         <div className="flex flex-col h-screen sm:p-4 sm:py-4 gradient-background text-white gap-12 justify-center">
           <div className="flex flex-col w-full justify-center">
+            <button onClick={verifconstructor}>
+                click me
+            </button>
             <p className="text-center font-bold text-2xl mb-4">Open Alerts</p>
   
             <table className="table-auto mx-auto">
