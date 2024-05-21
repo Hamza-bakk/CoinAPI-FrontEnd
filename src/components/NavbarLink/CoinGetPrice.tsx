@@ -20,14 +20,13 @@ type PriceData = {
 
 export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
   const [prices, setPrices] = useState<PriceData[]>([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [createAlert, setCreateAlert] = useState({
     userId: userId,
     targetPrice: "",
     currentPrice: 0,
     asset: "",
-    isOpen: true
-
+    isOpen: true,
   });
 
   const handleTargetPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +37,21 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
     }));
   };
 
+  const handleAssetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedAsset = e.target.value;
+    const selectedPriceData = prices.find(
+      (price) => price.asset_id_base === selectedAsset
+    );
+
+    if (selectedPriceData) {
+      setCreateAlert((prevState) => ({
+        ...prevState,
+        currentPrice: Math.floor(selectedPriceData.rate),
+        asset: selectedAsset,
+      }));
+    }
+  };
+
   const responseGetApi = async () => {
     try {
       const data: PriceData[] = await CoinAPI();
@@ -45,9 +59,8 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
       if (data.length > 0) {
         setCreateAlert((prevState) => ({
           ...prevState,
-          currentPrice: Math.floor(data[0].rate), // Ensure it's an integer
+          currentPrice: Math.floor(data[0].rate), // Default to first item
           asset: data[0].asset_id_base,
-  
         }));
       }
       console.log(data);
@@ -77,7 +90,7 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
         draggable: true,
         progress: undefined,
       });
-      navigate("/My/alerts")
+      navigate("/My/alerts");
       console.log("Alert created successfully:", response);
     } catch (error) {
       console.error("Error creating alert:", error);
@@ -122,19 +135,30 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
           <div className="flex flex-col h-2/3 border w-full justify-center text-center">
             <form onSubmit={createAlertAPI} className="mx-auto mt-4">
               <div className="mb-4">
-                <label className="block text-white text-sm font-bold mb-2" htmlFor="targetPrice">
-                  Target Price
+                <label
+                  className="block text-white text-sm font-bold mb-2"
+                  htmlFor="asset"
+                >
+                  Asset
                 </label>
-                <input
-                  type="number"
-                  name="targetPrice"
-                  value={createAlert.targetPrice}
-                  onChange={handleTargetPrice}
+                <select
+                  name="asset"
+                  value={createAlert.asset}
+                  onChange={handleAssetChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
+                >
+                  {prices.map((price, index) => (
+                    <option key={index} value={price.asset_id_base}>
+                      {price.asset_id_base}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="mb-4">
-                <label className="block text-white text-sm font-bold mb-2" htmlFor="currentPrice">
+                <label
+                  className="block text-white text-sm font-bold mb-2"
+                  htmlFor="currentPrice"
+                >
                   Current Price
                 </label>
                 <input
@@ -146,14 +170,17 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-white text-sm font-bold mb-2" htmlFor="asset">
-                  Asset
+                <label
+                  className="block text-white text-sm font-bold mb-2"
+                  htmlFor="targetPrice"
+                >
+                  Target Price
                 </label>
                 <input
-                  type="text"
-                  name="asset"
-                  value={createAlert.asset}
-                  readOnly
+                  type="number"
+                  name="targetPrice"
+                  value={createAlert.targetPrice}
+                  onChange={handleTargetPrice}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>

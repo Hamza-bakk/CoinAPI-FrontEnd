@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {fetchAlertsByUserId, Alert, AlertsData,} from "../../backend/GraphQL/Resolvers/Query/AlertsByUser";
+import { fetchUpdateAlertsStatus, UpdateAlertStatut,  } from "../../backend/GraphQL/Resolvers/Mutations/UpdateAlertsStatus";
 import { useAtom } from "jotai";
 import { userAtom } from "../../stores/userAtom";
 import Cookies from "js-cookie";
@@ -21,6 +22,7 @@ export const SetAlerts = () => {
         }
         const alertsData: AlertsData = await fetchAlertsByUserId(token, userId);
         setAlerts(alertsData.alertsByUserId); // Assurez-vous d'accéder correctement aux données
+        
         setLoading(false);
         
       } catch (error) {
@@ -33,6 +35,40 @@ export const SetAlerts = () => {
       getAlerts();
     }
   }, [user, userId]);
+
+
+//   useEffect(() => {
+//     const passAlertToClose = async (alerts) => {
+//       const token = Cookies.get("access_token");
+//       const openlog = (openAlerts[alerts.id].isOpen === true)
+//       console.log(alerts.isOpen);
+      
+      
+
+//       if (alerts.isOpen) {
+//         console.log(alerts.currentPrice);
+//         console.log(alerts.currentPrice)
+        
+//         if (alerts.currentPrice >= alerts.targetPrice || alerts.currentPrice <= alerts.targetPrice) {
+//           const alertData: UpdateAlertStatut = {
+//             alertId: alerts.id,
+//             isOpen: false
+//           };
+//           try {
+//             const updateStatut = await fetchUpdateAlertsStatus(token, alertData);
+//             console.log('Alert status updated:', updateStatut);
+//           } catch (error) {
+//             console.error('Error updating alert status:', error);
+//           }
+//         }
+//       }
+//     };
+
+//     if (alerts) {
+//       passAlertToClose(alerts);
+//     }
+//   }, [alerts]); 
+
 
   const openAlerts = alerts.filter(alert => alert.isOpen);
   const closedAlerts = alerts.filter(alert => !alert.isOpen);
@@ -97,6 +133,7 @@ export const SetAlerts = () => {
                 ))}
               </tbody>
             </table>
+          
           </div>
         </div>
   
