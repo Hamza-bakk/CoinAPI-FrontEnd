@@ -1,10 +1,10 @@
 // src/backend/ApiGraphQL/api.js
 import { GraphQLClient } from "graphql-request";
 import { API_GRAPHQL } from "../../../../../config";
-import { QueryAPI } from "../../RequeteAPI/Query/AlertsByUsergql.tsx";
+import { CreateAlertsgql } from "../../RequeteAPI/Mutations/CreateAlertsgql";
 
-export type Alert = {
-  id: string;
+export type CreateAlertType = {
+  userId: string;
   asset: string;
   currentPrice: number;
   targetPrice: number;
@@ -12,20 +12,26 @@ export type Alert = {
 };
 
 export type AlertsData = {
-  alertsByUserId: Alert[];
-};
+    alertsByUserId: CreateAlertType[];
+  };
 
 const client = new GraphQLClient(API_GRAPHQL);
 
-export const fetchAlertsByUserId = async (token: string, userId: string) => {
+export const fetchCreateAlertType = async (token: string, alertData: CreateAlertType) => {
   try {
     const headers = {
-      Authorization: `Bareer ${token}`,
+      Authorization: `Bearer ${token}`,
     };
-    const variables = { userId };
+
+    const variables = {
+      userId: alertData.userId,
+      asset: alertData.asset,
+      currentPrice: alertData.currentPrice,
+      targetPrice: alertData.targetPrice,
+    };
 
     const data = await client.request<AlertsData>(
-      QueryAPI.ALL_ALERTS_BY_USER,
+      CreateAlertsgql.CREATE_ALERTS,
       variables,
       headers
     );

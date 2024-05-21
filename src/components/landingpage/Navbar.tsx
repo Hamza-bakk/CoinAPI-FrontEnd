@@ -27,16 +27,16 @@ export const Navbar = () => {
           </div>
           <div className="flex flex-row w-9/12 justify-around sm:gap-4 text-center items-center">
             <a
-              href="/"
+              href="/Create/alerts"
               className="text-white font-bold sm:text-sm hover:underline"
             >
-              ABOUT ME            
+             CREATE ALERTS           
               </a>
             <a
-              href="/"
+              href="/My/alerts"
               className="text-white font-bold  sm:text-sm  hover:underline"
             >
-              CONTACT
+              SET ALERTS
             </a>
             {user.id == "" ? ( // Vérifier si l'ID de l'utilisateur est défini
               <a

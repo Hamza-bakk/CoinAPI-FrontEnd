@@ -22,10 +22,17 @@ import { NewPassword } from './components/profile/NewPassword';
 import { ConfirmNewPassword } from './components/profile/ConfirmNewPassword';
 import { EditProfile } from './components/profile/EditProfile';
 import { DeleteProfile } from './components/profile/DeleteProfile';
+import { CoinGetPrice } from './components/NavbarLink/CoinGetPrice';
+import { SetAlerts } from './components/NavbarLink/SetAlerts';
+
+
+
+
 import { ToastContainer, toast } from 'react-toastify';
 
+
 function AppContent() {
-  const [, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -93,6 +100,8 @@ function AppContent() {
         <Route path="/confirm/password" element ={<ConfirmNewPassword />} />
         <Route path="/edit/profil" element = {<EditProfile />} />
         <Route path="/delete/user" element = {< DeleteProfile/>} />
+        <Route path="/Create/alerts" element = {< CoinGetPrice  userId={user.id}/>} />
+        <Route path="/My/alerts" element = {<SetAlerts/>} />
 
       </Routes>
     </>
