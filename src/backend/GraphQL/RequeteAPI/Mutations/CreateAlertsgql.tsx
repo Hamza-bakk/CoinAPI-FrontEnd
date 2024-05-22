@@ -20,6 +20,7 @@ export const CreateAlertsgql = {
           targetPrice
           isOpen
           openDate
+          closeDate
         }
       }
     }

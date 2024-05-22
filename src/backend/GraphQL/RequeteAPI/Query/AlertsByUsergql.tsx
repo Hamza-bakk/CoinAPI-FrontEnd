@@ -10,6 +10,8 @@ export const QueryAPI = {
         currentPrice
         targetPrice
         isOpen
+        openDate
+        closeDate
         userId {
           id
           firstName

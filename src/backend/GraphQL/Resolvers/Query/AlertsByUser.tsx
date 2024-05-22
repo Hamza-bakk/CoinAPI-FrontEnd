@@ -9,6 +9,8 @@ export type Alert = {
   currentPrice: number;
   targetPrice: number;
   isOpen: boolean;
+  openDate: Date;
+  closeDate: Date;
 };
 
 export type AlertsData = {
