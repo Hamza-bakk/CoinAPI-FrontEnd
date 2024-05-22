@@ -14,6 +14,7 @@ export type Alert = {
 };
 
 export type AlertsData = {
+  alerts: any;
   alertsByUserId: Alert[];
 };
 

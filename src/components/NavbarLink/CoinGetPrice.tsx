@@ -63,7 +63,6 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
           asset: data[0].asset_id_base,
         }));
       }
-      console.log(data);
     } catch (error) {
       console.error("Une erreur s'est produite lors de la connexion :", error);
     }
@@ -78,9 +77,7 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
     try {
       const token = Cookies.get("access_token");
       if (!token) throw new Error("Token not found");
-      console.log(createAlert);
-      console.log(token);
-      const response = await fetchCreateAlertType(token, createAlert);
+      await fetchCreateAlertType(token, createAlert);
       toast.success('The alert has been created', {
         position: 'top-right',
         autoClose: 1000,
@@ -91,7 +88,6 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
         progress: undefined,
       });
       navigate("/My/alerts");
-      console.log("Alert created successfully:", response);
     } catch (error) {
       console.error("Error creating alert:", error);
     }

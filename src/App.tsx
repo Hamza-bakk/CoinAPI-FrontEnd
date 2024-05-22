@@ -24,6 +24,7 @@ import { EditProfile } from './components/profile/EditProfile';
 import { DeleteProfile } from './components/profile/DeleteProfile';
 import { CoinGetPrice } from './components/NavbarLink/CoinGetPrice';
 import { SetAlerts } from './components/NavbarLink/SetAlerts';
+import { EditAlerts } from './components/NavbarLink/AlertsCrud/EditAlerts';
 
 
 
@@ -65,7 +66,6 @@ function AppContent() {
         }
       } else {
         // Si l'utilisateur n'est pas authentifié, supprimer le cookie access_token
-        console.log(token);
         
       }
       setLoading(false);
@@ -102,6 +102,8 @@ function AppContent() {
         <Route path="/delete/user" element = {< DeleteProfile/>} />
         <Route path="/Create/alerts" element = {< CoinGetPrice  userId={user.id}/>} />
         <Route path="/My/alerts" element = {<SetAlerts/>} />
+        <Route path="/edit/alerts/:alertId" element={<EditAlerts alertId={""} />} />
+
 
       </Routes>
     </>

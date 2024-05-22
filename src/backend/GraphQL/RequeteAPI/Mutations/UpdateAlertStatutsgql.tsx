@@ -11,4 +11,21 @@ export const UpdateAlertStatutsgql = {
       }
     }
   `
+
 };
+
+export const UpdateAlertAllFields = {
+  UPDATE_ALERT_ALL_FIELDS: gql`
+    mutation updateAlerts($id: ID!, $asset: String, $currentPrice: Int, $targetPrice: Int) {
+      updateAlerts(
+        id: $id
+        asset: $asset
+        currentPrice: $currentPrice
+        targetPrice: $targetPrice) {
+        alerts {
+          id
+        }
+      }
+    }
+  `
+  }

@@ -25,7 +25,7 @@ export const ChangePassword = () => {
   const ResetNewPasswordAPI = async () => {
     try {
       if (newPassword === reNewPassword) {
-        const response = await axios.post(
+         await axios.post(
           `${API_URL}/auth/users/reset_password_confirm/`,
           {
             uid: uid,
@@ -34,7 +34,6 @@ export const ChangePassword = () => {
             re_new_password: reNewPassword,
           }
         );
-        console.log(response.data);
         navigate("/login");
         toast.success("The new password has been Changed", {
           position: "top-right",

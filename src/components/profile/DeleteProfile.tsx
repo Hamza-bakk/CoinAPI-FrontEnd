@@ -31,7 +31,6 @@ export const DeleteProfile = () => {
         console.error("No token found");
         return;
       }
-      console.log(userData, token);
       
       await DeleteUserAPI(token, userData);
       Cookies.remove("access_token")

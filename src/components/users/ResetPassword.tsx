@@ -13,13 +13,13 @@ export const ResetPassword = () => {
     const navigate = useNavigate()
 
     const hundleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value); // Vérifiez la valeur de l'input à chaque changement
-        
+    
         setEmail(event.target.value)
     }
 
     useEffect(() => {
-        let timer: number = 60;
+        let timer: number | NodeJS.Timeout;
+        timer = 60;
         if (count > 0 && isButtonDisabled) {
             timer = setTimeout(() => {
                 setCount(prevCount => prevCount - 1); 

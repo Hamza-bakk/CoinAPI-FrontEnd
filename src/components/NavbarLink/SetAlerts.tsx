@@ -4,24 +4,31 @@ import {
   Alert,
   AlertsData,
 } from "../../backend/GraphQL/Resolvers/Query/AlertsByUser";
-import {
-  fetchUpdateAlertsStatus,
-  UpdateAlertStatut,
-} from "../../backend/GraphQL/Resolvers/Mutations/UpdateAlertsStatus";
+import {fetchUpdateAlertsStatus} from "../../backend/GraphQL/Resolvers/Mutations/UpdateAlertsStatus";
 import { GetApi } from "../../backend/ApiRESTFULL/get/get";
 
 import { useAtom } from "jotai";
 import { userAtom } from "../../stores/userAtom";
 import Cookies from "js-cookie";
+import { EditAlerts } from "./AlertsCrud/EditAlerts";
+import { useNavigate } from "react-router-dom";
 
 const { CoinAPI } = GetApi;
 
 export const SetAlerts = () => {
   const [user] = useAtom(userAtom);
+  const navigate = useNavigate()
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [, setLoading] = useState(true);
   const [, setError] = useState(null);
-  const userId = user.id; // Utiliser directement user.id, car il est déjà une chaîne
+  const userId = user.id;
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = (alertId: string) => {
+    setIsEditing(true);
+    navigate(`/edit/alerts/${alertId}`);
+  };
 
   useEffect(() => {
     const getAlerts = async () => {
@@ -49,21 +56,16 @@ export const SetAlerts = () => {
   useEffect(() => {
     const passAlertToClose = async (alerts: any[]) => {
       const token = Cookies.get("access_token");
-
-      // Obtenir les prix en direct pour les assets
       const currentPriceLive = await CoinAPI();
       const pricesByAsset = currentPriceLive.reduce((acc, price) => {
         acc[price.asset_id_base] = price.rate;
         return acc;
       }, {});
 
-      console.log(pricesByAsset);
       const openAlerts = alerts.filter((alert) => alert.isOpen);
       const updatePromises = openAlerts.map(async (alert) => {
         const currentPriceLive = pricesByAsset[alert.asset];
-        console.log(currentPriceLive);
-        console.log(alert.targetPrice);
-        console.log(alert.currentPrice);
+
         if (alert.isOpen && currentPriceLive !== null) {
           const alertData = {
             id: alert.id,
@@ -72,14 +74,12 @@ export const SetAlerts = () => {
 
           if (alert.targetPrice > alert.currentPrice) {
             if (currentPriceLive >= alert.targetPrice) {
-              const response = await fetchUpdateAlertsStatus(token, alertData);
-              console.log("Reponse 1", response);
+               await fetchUpdateAlertsStatus(token, alertData);
             }
           }
           if (alert.targetPrice < alert.currentPrice) {
             if (currentPriceLive <= alert.targetPrice) {
-              const response = await fetchUpdateAlertsStatus(token, alertData);
-              console.log("Reponse 2", response);
+              await fetchUpdateAlertsStatus(token, alertData);
             }
           }
         }
@@ -96,7 +96,7 @@ export const SetAlerts = () => {
   const openAlerts = alerts.filter((alert) => alert.isOpen);
   const closedAlerts = alerts.filter((alert) => !alert.isOpen);
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: Date) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -107,9 +107,6 @@ export const SetAlerts = () => {
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   };
 
-  // Example usage:
-  const formattedDate = formatDate("2024-05-22T10:17:22.947070+00:00");
-  console.log(formattedDate); // Output: "22/05/2024 10:17:22"
 
   return (
     <>
@@ -131,6 +128,11 @@ export const SetAlerts = () => {
                     <th className="border px-4 py-2">Current Price</th>
                     <th className="border px-4 py-2">Target Price</th>
                     <th className="border px-4 py-2">Is Open ?</th>
+                    <th className="border px-4 py-2">Edit</th>
+                    <th className="border px-4 py-2">Delete</th>
+
+
+
                   </tr>
                 </thead>
                 <tbody>
@@ -155,6 +157,13 @@ export const SetAlerts = () => {
                       <td className="border px-4 py-2 font-bold text-orange-500">
                         {alert.isOpen ? "Open" : "Close"}
                       </td>
+                      <td className="border px-4 py-2 font-bold text-orange-500 cursor-pointer" onClick={() => handleEditClick(alert.id)}>
+                        Edit ✏️
+                      </td>
+                      <td className="border px-4 py-2 font-bold text-orange-500 cursor-pointer">
+                        Delete 🗑️
+                      </td>
+
                     </tr>
                   ))}
                 </tbody>
@@ -174,8 +183,8 @@ export const SetAlerts = () => {
                     <th className="border px-4 py-2">Current Price</th>
                     <th className="border px-4 py-2">Target Price</th>
                     <th className="border px-4 py-2">Is Open ?</th>
-                    <th className="border px-4 py-2">Open Close</th>
-                    <th className="border px-4 py-2">Date Close</th>
+                    <th className="border px-4 py-2">Open Date</th>
+                    <th className="border px-4 py-2">Close Date</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -32,8 +32,6 @@ export const Login = () => {
     try {
       const response = await JwtCreate(formDataLogin);
       const { access } = response;
-      console.log(access);
-
       const userData = await UserLogin(access);
       Cookies.set("access_token", access);
       setUser({
