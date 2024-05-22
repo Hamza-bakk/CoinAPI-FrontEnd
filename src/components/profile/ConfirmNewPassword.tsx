@@ -29,7 +29,7 @@ export const ConfirmNewPassword = () => {
   return (
     <>
     {user.id && (
-    <div className="flex gradient-background flex-col items-center justify-center h-screen">
+    <div className="flex gradient-background flex-col items-center justify-center min-h-screen">
       <div className="flex w-full border-spacing-8 flex-col max-w-lg p-8 gap-8 bg-white text-center rounded-lg shadow-lg">
         <p className="text-green-600 font-semibold text-lg">
           We confirm the change of your password.

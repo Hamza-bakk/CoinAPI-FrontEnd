@@ -40,7 +40,7 @@ export const ResetPassword = () => {
     }
   return (
         <>
-            <div className="flex flex-col gradient-background h-screen text-black">
+            <div className="flex flex-col gradient-background min-h-screen text-black">
                 <input 
                     id="email" 
                     name='email'

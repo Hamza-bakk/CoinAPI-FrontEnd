@@ -3,7 +3,7 @@ import React from "react";
 
 export const AwaitConfirmation = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-full h-screen gradient-background">
+    <div className="flex flex-col justify-center items-center w-full min-h-screen gradient-background">
       <div className="max-w-lg px-8 py-12 rounded-lg bg-white shadow-lg text-center">
         <h4 className="text-3xl text-gray-800 mb-8">
           Un email de confirmation vous a été envoyé !

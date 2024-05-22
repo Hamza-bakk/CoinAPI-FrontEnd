@@ -65,7 +65,7 @@ export const ChangePassword = () => {
 
   return (
     <>
-      <div className="flex gradient-background flex-col gap-8 items-center justify-center h-screen">
+      <div className="flex gradient-background flex-col gap-8 items-center justify-center min-h-screen">
         <div className="w-full flex flex-col max-w-lg p-8 gap-8 gradient-background rounded-lg shadow-lg">
           <h2 className="text-3xl text-white mb-4 text-center">
             Changement de votre mot de passe

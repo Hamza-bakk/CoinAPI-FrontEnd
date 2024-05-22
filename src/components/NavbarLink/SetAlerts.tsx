@@ -30,6 +30,11 @@ export const SetAlerts = () => {
     navigate(`/edit/alerts/${alertId}`);
   };
 
+  const handleDeleteClick = (alertId: string) => {
+    setIsEditing(true);
+    navigate(`/delete/alerts/${alertId}`);
+  };
+
   useEffect(() => {
     const getAlerts = async () => {
       try {
@@ -111,7 +116,7 @@ export const SetAlerts = () => {
   return (
     <>
       {user.id ? (
-        <div className="flex flex-col h-screen gradient-background sm:text-sm text-white gap-12 sm:gap-2 justify-center">
+        <div className="flex flex-col min-h-screen gradient-background sm:text-sm text-white gap-12 sm:gap-2 justify-center">
           <div className="flex flex-col overflow-x-auto">
             <div className="flex flex-col w-full justify-center">
               <p className="text-center font-bold text-2xl sm:text-sm mb-4">
@@ -160,7 +165,7 @@ export const SetAlerts = () => {
                       <td className="border px-4 py-2 font-bold text-orange-500 cursor-pointer" onClick={() => handleEditClick(alert.id)}>
                         Edit ✏️
                       </td>
-                      <td className="border px-4 py-2 font-bold text-orange-500 cursor-pointer">
+                      <td className="border px-4 py-2 font-bold text-orange-500 cursor-pointer" onClick={() => handleDeleteClick(alert.id)}>
                         Delete 🗑️
                       </td>
 
@@ -220,7 +225,7 @@ export const SetAlerts = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col h-screen sm:p-4 sm:py-4 gradient-background text-white justify-center">
+        <div className="flex flex-col min-h-screen sm:p-4 sm:py-4 gradient-background text-white justify-center">
           <div className="flex flex-col text-2xl w-full justify-center">
             <p className="text-center">Please log in to see your alerts.</p>
           </div>

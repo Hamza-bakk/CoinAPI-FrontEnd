@@ -66,7 +66,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex gradient-background flex-col gap-8 items-center justify-center h-screen">
+    <div className="flex gradient-background flex-col gap-8 items-center justify-center min-h-screen">
       <div className="w-full flex flex-col max-w-lg p-8 gradient-background rounded-lg shadow-lg">
         <h2 className="text-3xl text-white mb-4 text-center">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

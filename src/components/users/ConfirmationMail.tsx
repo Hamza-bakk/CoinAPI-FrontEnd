@@ -46,7 +46,7 @@ export const ConfirmationMail = () => {
   return (
     <>
       <Fragment>
-        <button onClick={activeClick} className='flex gradient-background flex-col items-center justify-center h-screen'></button>
+        <button onClick={activeClick} className='flex gradient-background flex-col items-center justify-center min-h-screen'></button>
         <div className='text-white text-3xl text-center justify-center items-center'>
           Your account has been activated
         </div>

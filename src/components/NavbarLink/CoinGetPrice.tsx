@@ -104,7 +104,7 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
   return (
     <>
       {userId ? (
-        <div className="flex flex-col h-screen w-full sm:p-4 sm:py-4 gradient-background text-center text-white">
+        <div className="flex flex-col min-h-screen w-full sm:p-4 sm:py-4 gradient-background text-center text-white">
           <div className="flex flex-col h-1/3 border w-full justify-center">
             <table className="table-auto mx-auto mt-4">
               <thead>
@@ -190,7 +190,7 @@ export const CoinGetPrice: React.FC<Props> = ({ userId }) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col h-screen sm:p-4 sm:py-4 gradient-background text-white justify-center">
+        <div className="flex flex-col min-h-screen sm:p-4 sm:py-4 gradient-background text-white justify-center">
           <div className="flex flex-col text-2xl  w-full justify-center">
             <p className="text-center">Please log in to create your alerts.</p>
           </div>

@@ -36,7 +36,7 @@ export const PageOne = () => {
   });
 
   return (
-    <div className="flex flex-col h-screen w- sm:p-4 sm:py-4 gradient-background justify-center items-center text-center">
+    <div className="flex flex-col min-h-screen w- sm:p-4 sm:py-4 gradient-background justify-center items-center text-center">
       <div className="flex flex-col  before:text-center justify-center items-center text-white gap-2 ">
         <h1 className="text-4xl font-bold">
           Bonjour {user.first_name ? user.first_name : "Invité"}

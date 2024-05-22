@@ -61,7 +61,7 @@ export const NewPassword = () => {
   };
 
   return (
-    <div className="flex gradient-background flex-col items-center justify-center h-screen">
+    <div className="flex gradient-background flex-col items-center justify-center min-h-screen">
       <div className="flex w-full border-spacing-8 flex-col max-w-lg p-8 gap-8 gradient-background text-center rounded-lg shadow-lg">
         <form
           onSubmit={handleSubmitNewPassword}

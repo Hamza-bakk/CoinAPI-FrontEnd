@@ -77,7 +77,7 @@ export const EditProfile = () => {
   return (
     <>
       {user.id && (
-        <div className="flex gradient-background flex-col items-center justify-center h-screen">
+        <div className="flex gradient-background flex-col items-center justify-center min-h-screen">
           <div className="w-full gradient-background max-w-lg p-8 gap-8 flex flex-col text-center bg-white rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col gap-4">

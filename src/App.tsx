@@ -25,6 +25,7 @@ import { DeleteProfile } from './components/profile/DeleteProfile';
 import { CoinGetPrice } from './components/NavbarLink/CoinGetPrice';
 import { SetAlerts } from './components/NavbarLink/SetAlerts';
 import { EditAlerts } from './components/NavbarLink/AlertsCrud/EditAlerts';
+import { DeleteAlerts } from './components/NavbarLink/AlertsCrud/DeleteAlerts';
 
 
 
@@ -103,6 +104,8 @@ function AppContent() {
         <Route path="/Create/alerts" element = {< CoinGetPrice  userId={user.id}/>} />
         <Route path="/My/alerts" element = {<SetAlerts/>} />
         <Route path="/edit/alerts/:alertId" element={<EditAlerts alertId={""} />} />
+        <Route path="/delete/alerts/:alertId" element={<DeleteAlerts/>} />
+        
 
 
       </Routes>

@@ -33,6 +33,16 @@ export const EditAlerts: React.FC<Props> = () => {
     try {
       const token = Cookies.get('access_token');
       if (!token) {
+        navigate("/login")
+        toast.error(`the session has expired`, {
+            position: 'top-right',
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
         throw new Error('Token is missing');
       }
       await fetchupdateAllFieldsData(token, editAlert);
@@ -47,7 +57,6 @@ export const EditAlerts: React.FC<Props> = () => {
         });
      navigate("/My/alerts");
         
-      console.log('Alert updated successfully');
     } catch (error) {
       console.error('Error updating alert:', error);
     }
@@ -66,33 +75,28 @@ export const EditAlerts: React.FC<Props> = () => {
   return (
     <>
       {user.id ? (
-        <div className="flex flex-col h-screen gradient-background text-white gap-12 justify-center p-4">
-          <h1 className="text-2xl font-bold mb-4">Edit Alert {alertId}</h1>
+        <div className="flex flex-col sm:text-lg min-h-screen gradient-background text-white gap-12 justify-center items-center text-center p-4">
+          <h1 className="text-2xl font-bold mb-4 text-sky-200">Edit Alert {alertId}</h1>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="flex flex-col">
-              <label
-                className="block text-white text-sm font-bold mb-2"
-                htmlFor="targetPrice"
-              >
-                Target Price
-              </label>
+            <div className="flex flex-col text-start ">
+              <label htmlFor="targetPrice"> Target Price</label>
               <input
                 type="number"
                 id="targetPrice"
                 name="targetPrice"
                 value={editAlert.targetPrice}
                 onChange={handleTargetPriceChange} // Ajout du gestionnaire d'événements onChange
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="flex mt-6 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
-            <div className="flex gap-4">
-              <button type="submit" className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Update Alert</button>
-              <button type="button" onClick={handleCancel} className="p-2 bg-gray-500 text-white rounded-md hover:bg-gray-700">Cancel</button>
+            <div className="flex mt-6 items-center justify-between">
+              <button type="submit" className="p-2 w-30 bg-blue-500 text-white rounded-md hover:bg-blue-700">Update Alert</button>
+              <button type="button" onClick={handleCancel} className="p-2 w-30 bg-gray-500 text-white rounded-md hover:bg-gray-700">Cancel</button>
             </div>
           </form>
         </div>
       ) : (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center min-h-screen">
           <p className="text-white text-xl">You need to be logged in to edit alerts.</p>
         </div>
       )}
