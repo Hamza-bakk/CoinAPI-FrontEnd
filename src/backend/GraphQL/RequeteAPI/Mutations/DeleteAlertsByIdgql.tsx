@@ -6,7 +6,7 @@ export const DeleteAlertsByIdgql = {
     mutation deleteAlerts($id: ID!) { 
         deleteAlerts(id: $id) {
             alertsId
-        }
+        }  
     }
     `
 }

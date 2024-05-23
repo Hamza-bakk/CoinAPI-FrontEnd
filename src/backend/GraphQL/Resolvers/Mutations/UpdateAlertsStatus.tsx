@@ -7,12 +7,14 @@ const client = new GraphQLClient(API_GRAPHQL);
 export type UpdateAlertStatut = {
   id: string;
   isOpen: boolean;
+  userId: string;
 };
 
 export type UpdateAlertAllFields = {
   id: string;
   targetPrice: number;
-}
+  userId: string;
+};
 
 export type UpdateAlertsData = {
   updateAlertStatut: UpdateAlertStatut;
@@ -29,6 +31,7 @@ export const fetchUpdateAlertsStatus = async (token: string, alertData: UpdateAl
     const variables = {
       id: alertData.id,
       isOpen: alertData.isOpen,
+      userId: alertData.userId
     };
 
     const data = await client.request<UpdateAlertsData>(UpdateAlertStatutsgql.UPDATE_ALERT_STATUT, variables, headers);
@@ -49,8 +52,12 @@ export const fetchupdateAllFieldsData = async(token: string, UpdateAlertsData: U
     const variables = {
       id: UpdateAlertsData.id,
       targetPrice: UpdateAlertsData.targetPrice,
+      userId: UpdateAlertsData.userId
+
     };
     const data = await client.request<UpdateAlertsData>(UpdateAlertAllFields.UPDATE_ALERT_ALL_FIELDS, variables, headers);
+    console.log(data);
+    
     return data
 
   } catch (error) {

@@ -14,9 +14,11 @@ export const EditAlerts: React.FC<Props> = () => {
   const { alertId } = useParams<{ alertId: string }>();
   const [user] = useAtom(userAtom);
   const navigate = useNavigate();
+
   const [editAlert, setEditAlert] = useState<UpdateAlertAllFields>({
     id: alertId || '',
-    targetPrice: 0,   
+    targetPrice: 0,  
+    userId: user.id.toString() || '', 
   });
 
   // Fonction pour gérer les changements de l'input targetPrice
@@ -45,7 +47,9 @@ export const EditAlerts: React.FC<Props> = () => {
             });
         throw new Error('Token is missing');
       }
+      console.log(editAlert);
       await fetchupdateAllFieldsData(token, editAlert);
+      
         toast.success(`The alert ${alertId} has been updated `, {
         position: 'top-right',
         autoClose: 1000,

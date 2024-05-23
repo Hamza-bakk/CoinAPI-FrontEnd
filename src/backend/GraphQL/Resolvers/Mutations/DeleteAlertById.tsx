@@ -8,8 +8,6 @@ export type DeleteAlertField = {
     id: string
 }
 
-
-
 export const DeleteAlertById = async (token: string, DeleteAlertField: DeleteAlertField) => {
     try {
         const headers = {

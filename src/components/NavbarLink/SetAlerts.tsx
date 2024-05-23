@@ -75,7 +75,10 @@ export const SetAlerts = () => {
           const alertData = {
             id: alert.id,
             isOpen: false,
+            userId: user.id.toString(), // Convertir userId en chaîne de caractères
           };
+          console.log(alertData);
+          
 
           if (alert.targetPrice > alert.currentPrice) {
             if (currentPriceLive >= alert.targetPrice) {
