@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import { userAtom } from './stores/userAtom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import { API_URL } from '../config';
 import { Navbar } from './components/landingpage/Navbar';
 import LandingPage from './pages/Landingpage/landingpage';
@@ -26,11 +27,6 @@ import { CoinGetPrice } from './components/NavbarLink/CoinGetPrice';
 import { SetAlerts } from './components/NavbarLink/SetAlerts';
 import { EditAlerts } from './components/NavbarLink/AlertsCrud/EditAlerts';
 import { DeleteAlerts } from './components/NavbarLink/AlertsCrud/DeleteAlerts';
-
-
-
-
-import { ToastContainer, toast } from 'react-toastify';
 
 
 function AppContent() {
@@ -104,10 +100,8 @@ function AppContent() {
         <Route path="/Create/alerts" element = {< CoinGetPrice  userId={user.id}/>} />
         <Route path="/My/alerts" element = {<SetAlerts/>} />
         <Route path="/edit/alerts/:alertId" element={<EditAlerts alertId={""} />} />
-        <Route path="/delete/alerts/:alertId" element={<DeleteAlerts/>} />
+        <Route path="/delete/alerts/:alertId" element={<DeleteAlerts alertId={""}/>} />
         
-
-
       </Routes>
     </>
   );
@@ -115,9 +109,11 @@ function AppContent() {
 
 function App() {
   return (
+
     <Router>
       <AppContent />
     </Router>
+    
   );
 }
 

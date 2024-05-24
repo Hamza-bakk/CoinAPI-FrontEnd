@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 // src/backend/ApiGraphQL/api.js
 import { GraphQLClient } from "graphql-request";
 import { API_GRAPHQL } from "../../../../../config";
@@ -13,14 +14,16 @@ export type Alert = {
   closeDate: Date;
 };
 
+
+
 export type AlertsData = {
-  alerts: any;
-  alertsByUserId: Alert[];
+  alertsByUserId: any;
+  alert: Alert;
 };
 
 const client = new GraphQLClient(API_GRAPHQL);
 
-export const fetchAlertsByUserId = async (token: string, userId: string) => {
+export const fetchAlertsByUserId = async (token: string, userId: Alert) => {
   try {
     const headers = {
       Authorization: `Bareer ${token}`,
@@ -38,3 +41,25 @@ export const fetchAlertsByUserId = async (token: string, userId: string) => {
     throw error;
   }
 };
+
+
+export const QueryAlerts = async (token: string, userId: string) => {
+  try {
+    const headers = {
+      Authorization: `Bareer ${token}`,
+    };
+    const variables = { userId };
+
+    const data = await client.request<AlertsData>(
+      QueryAPI.QUERY_USERID,
+      variables,
+      headers
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching alerts:", error);
+    throw error;
+  }
+};
+
+

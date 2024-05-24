@@ -5,6 +5,7 @@ import {
   fetchupdateAllFieldsData,
   UpdateAlertAllFields,
 } from "../../../backend/GraphQL/Resolvers/Mutations/UpdateAlertsStatus";
+import { QueryAlerts } from "../../../backend/GraphQL/Resolvers/Query/AlertsByUser";
 import { useAtom } from "jotai";
 import { userAtom } from "../../../stores/userAtom";
 import { toast } from "react-toastify";
@@ -17,12 +18,14 @@ export const EditAlerts: React.FC<Props> = () => {
   const { alertId } = useParams<{ alertId: string }>();
   const [user] = useAtom(userAtom);
   const navigate = useNavigate();
+  const userIdTostring = user.id.toString()
 
   const [editAlert, setEditAlert] = useState<UpdateAlertAllFields>({
     id: alertId || "",
     targetPrice: 0,
     userId: user.id.toString() || "",
   });
+  
   // Fonction pour gérer les changements de l'input targetPrice
   const handleTargetPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,6 +35,49 @@ export const EditAlerts: React.FC<Props> = () => {
     }));
   };
 
+
+  useEffect(() => {
+    const queryUserVerificationUpdate = async () => {
+      try {
+        const token = Cookies.get("access_token");
+        if (!token) {
+          navigate("/login");
+          throw new Error("Token is missing");
+        }
+
+        const data = await QueryAlerts(token, userIdTostring);
+        const openAlerts = data.alertsByUserId.filter(
+          (alert: { isOpen: boolean }) => alert.isOpen === true
+        );
+        const alertIds = openAlerts.map((alert: { id: unknown }) => alert.id);
+
+        if (!alertIds.includes(alertId)) {
+          toast.error(`You dont have authorazition to update this alers`, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          navigate("/My/alerts");
+        }
+      } catch (error) {
+        console.error(
+          "An error occurred during user verification update:",
+          error
+        );
+      }
+    };
+
+    if (user.id && alertId) {
+      queryUserVerificationUpdate();
+    }
+  }, [user.id, alertId, userIdTostring, navigate]);
+  
+  
+  
   // Fonction pour envoyer les données mises à jour à l'API
   const updateAllFieldsApi = async () => {
     try {
@@ -49,7 +95,7 @@ export const EditAlerts: React.FC<Props> = () => {
         });
         throw new Error("Token is missing");
       }
-      await fetchupdateAllFieldsData(token, editAlert);
+        await fetchupdateAllFieldsData(token, editAlert);
 
       toast.success(`The alert ${alertId} has been updated `, {
         position: "top-right",
@@ -62,7 +108,8 @@ export const EditAlerts: React.FC<Props> = () => {
       });
       navigate("/My/alerts");
     } catch (error) {
-      console.error("Error updating alert:", error);
+      console.error("Error updating alert:", error)
+      navigate("/My/alerts");
     }
   };
 
