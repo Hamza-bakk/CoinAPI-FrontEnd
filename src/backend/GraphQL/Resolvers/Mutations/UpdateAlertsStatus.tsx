@@ -10,11 +10,6 @@ export type UpdateAlertStatut = {
   userId: string;
 };
 
-export type UpdateAlertAllFields = {
-  id: string;
-  targetPrice: number;
-  userId: string;
-};
 
 export type UpdateAlertsData = {
   updateAlertStatut: UpdateAlertStatut;
@@ -42,6 +37,13 @@ export const fetchUpdateAlertsStatus = async (token: string, alertData: UpdateAl
   }
 };
 
+export type UpdateAlertAllFields = {
+  id: string;
+  targetPrice: number;
+  userId: string;
+  asset?: string; // ajout des champs optionnels
+  currentPrice?: number;
+};
 
 export const fetchupdateAllFieldsData = async(token: string, UpdateAlertsData: UpdateAlertAllFields) => {
   try {
@@ -52,11 +54,11 @@ export const fetchupdateAllFieldsData = async(token: string, UpdateAlertsData: U
     const variables = {
       id: UpdateAlertsData.id,
       targetPrice: UpdateAlertsData.targetPrice,
-      userId: UpdateAlertsData.userId
+      userId: UpdateAlertsData.userId,
 
     };
+
     const data = await client.request<UpdateAlertsData>(UpdateAlertAllFields.UPDATE_ALERT_ALL_FIELDS, variables, headers);
-    console.log(data);
     
     return data
 

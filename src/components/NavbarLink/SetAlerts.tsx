@@ -4,7 +4,7 @@ import {
   Alert,
   AlertsData,
 } from "../../backend/GraphQL/Resolvers/Query/AlertsByUser";
-import {fetchUpdateAlertsStatus} from "../../backend/GraphQL/Resolvers/Mutations/UpdateAlertsStatus";
+import { fetchUpdateAlertsStatus } from "../../backend/GraphQL/Resolvers/Mutations/UpdateAlertsStatus";
 import { GetApi } from "../../backend/ApiRESTFULL/get/get";
 
 import { useAtom } from "jotai";
@@ -17,7 +17,7 @@ const { CoinAPI } = GetApi;
 
 export const SetAlerts = () => {
   const [user] = useAtom(userAtom);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [, setLoading] = useState(true);
   const [, setError] = useState(null);
@@ -75,14 +75,12 @@ export const SetAlerts = () => {
           const alertData = {
             id: alert.id,
             isOpen: false,
-            userId: user.id.toString(), // Convertir userId en chaîne de caractères
+            userId: user.id.toString(), 
           };
-          console.log(alertData);
-          
 
           if (alert.targetPrice > alert.currentPrice) {
             if (currentPriceLive >= alert.targetPrice) {
-               await fetchUpdateAlertsStatus(token, alertData);
+              await fetchUpdateAlertsStatus(token, alertData);
             }
           }
           if (alert.targetPrice < alert.currentPrice) {
@@ -115,7 +113,6 @@ export const SetAlerts = () => {
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   };
 
-
   return (
     <>
       {user.id ? (
@@ -138,9 +135,6 @@ export const SetAlerts = () => {
                     <th className="border px-4 py-2">Is Open ?</th>
                     <th className="border px-4 py-2">Edit</th>
                     <th className="border px-4 py-2">Delete</th>
-
-
-
                   </tr>
                 </thead>
                 <tbody>
@@ -165,13 +159,18 @@ export const SetAlerts = () => {
                       <td className="border px-4 py-2 font-bold text-orange-500">
                         {alert.isOpen ? "Open" : "Close"}
                       </td>
-                      <td className="border px-4 py-2 font-bold text-orange-500 cursor-pointer" onClick={() => handleEditClick(alert.id)}>
+                      <td
+                        className="border px-4 py-2 font-bold text-orange-500 cursor-pointer"
+                        onClick={() => handleEditClick(alert.id)}
+                      >
                         Edit ✏️
                       </td>
-                      <td className="border px-4 py-2 font-bold text-orange-500 cursor-pointer" onClick={() => handleDeleteClick(alert.id)}>
+                      <td
+                        className="border px-4 py-2 font-bold text-orange-500 cursor-pointer"
+                        onClick={() => handleDeleteClick(alert.id)}
+                      >
                         Delete 🗑️
                       </td>
-
                     </tr>
                   ))}
                 </tbody>

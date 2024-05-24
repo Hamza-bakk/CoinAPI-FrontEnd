@@ -6,6 +6,7 @@ const client = new GraphQLClient(API_GRAPHQL)
 
 export type DeleteAlertField = {
     id: string
+    userId: string
 }
 
 export const DeleteAlertById = async (token: string, DeleteAlertField: DeleteAlertField) => {
@@ -16,6 +17,7 @@ export const DeleteAlertById = async (token: string, DeleteAlertField: DeleteAle
 
         const variables = {
             id: DeleteAlertField.id,
+            userId: DeleteAlertField.userId,
           };
         const data = await client.request<DeleteAlertField>(DeleteAlertsByIdgql.DELETE_ALERT_BY_ID, variables, headers)
         return data

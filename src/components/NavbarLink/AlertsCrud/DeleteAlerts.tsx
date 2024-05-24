@@ -35,7 +35,13 @@ export const DeleteAlerts: React.FC<Props> = () => {
         });
         throw new Error("Token is missing");
       }
-      await DeleteAlertById(token, { id: alertId });
+
+      const dataVariable: DeleteAlertField = {
+        id: alertId ,
+        userId: user.id.toString()
+
+      }
+      await DeleteAlertById(token, dataVariable);
       toast.success(`The alert ${alertId} has been deleted `, {
         position: 'top-right',
         autoClose: 1000,

@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 
 export const UpdateAlertStatutsgql = {
   UPDATE_ALERT_STATUT: gql`
-    mutation updateAlerts($id: ID!, $isOpen: Boolean!, userId: ID!) {
+    mutation updateAlerts($id: ID!, $isOpen: Boolean!, $userId: ID!) {
       updateAlerts(id: $id, isOpen: $isOpen, userId: $userId) {
         alerts {
           id
@@ -16,7 +16,7 @@ export const UpdateAlertStatutsgql = {
 
 export const UpdateAlertAllFields = {
   UPDATE_ALERT_ALL_FIELDS: gql`
-      mutation updateAlerts($id: ID!, $asset: String, $currentPrice: Int, $targetPrice: Int, userId: ID!)
+    mutation updateAlerts($id: ID!, $asset: String, $currentPrice: Int, $targetPrice: Int, $userId: ID!) {
       updateAlerts(
         id: $id
         userId: $userId
@@ -30,4 +30,4 @@ export const UpdateAlertAllFields = {
       }
     }
   `
-  }
+}

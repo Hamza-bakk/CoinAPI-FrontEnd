@@ -31,11 +31,9 @@ export const Login = () => {
     e.preventDefault();
     try {
       const response = await JwtCreate(formDataLogin);
-      console.log("access token", response);
       
       const { access } = response;
       const userData = await UserLogin(access);
-      console.log("user data",userData );
       
       Cookies.set("access_token", access);
       setUser({
